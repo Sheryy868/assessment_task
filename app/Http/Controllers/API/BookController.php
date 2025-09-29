@@ -48,9 +48,21 @@ class BookController extends Controller
     }
 
     // DELETE /api/books/{book}
-    public function destroy(Book $book)
-    {
-        $book->delete();
-        return response()->json(null, 204);
+  public function destroy($id)
+{
+    $book = Book::find($id);
+
+    if (! $book) {
+        return response()->json([
+            'message' => 'Book not found'
+        ], 404);
     }
+
+    $book->delete();
+
+    return response()->json([
+        'message' => 'Book record deleted successfully'
+    ], 200);
+}
+
 }
